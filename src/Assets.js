@@ -4,7 +4,7 @@ class Assets {
 		 * Holds the data of the manifest file
 		 * @member {string}
 		 */
-		this.manifest = JSON.parse(manifest);
+		this.manifest = manifest;
 
 		/**
 		 * Flag if all manifest files are done loading
