@@ -4,18 +4,11 @@ class Game {
 	}
 
 	init() {
-		// Start the game loop when we have fetched the assets
-		(function isReady() {
-			if (assets.isDone) {
-				this.loop();
-			} else {
-				setTimeout(isReady.bind(this), 500);
-			}
-		})();
+		// todo
 	}
 
 	loop() {
-
+		console.log('Loop started');
 	}
 }
 
