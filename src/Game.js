@@ -15,7 +15,7 @@ class Game {
 	}
 
 	loop() {
-		
+
 	}
 }
 
