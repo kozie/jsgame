@@ -1,5 +1,12 @@
 {
 	"images": {
-		"zelda": "zelda.gif"
+		"zelda": "zelda.gif",
+
+		"cat1": "cat1.jpg",
+		"cat2": "cat2.jpg",
+		"cat3": "cat3.jpg",
+		"cat4": "cat4.jpg",
+		"cat5": "cat5.jpg",
+		"cat6": "cat6.jpg"
 	}
 }
