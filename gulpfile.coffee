@@ -1,21 +1,24 @@
-gulp = require "gulp"
+gulp       = require "gulp"
 
 browserify = require "browserify"
 babelify   = require "babelify"
 watchify   = require "watchify"
 stringify  = require "stringify"
 
-source = require "vinyl-source-stream"
-buffer = require "vinyl-buffer"
+source     = require "vinyl-source-stream"
+buffer     = require "vinyl-buffer"
 
-rename = require "gulp-rename"
-uglify = require "gulp-uglify"
+rename     = require "gulp-rename"
+uglify     = require "gulp-uglify"
 sourcemaps = require "gulp-sourcemaps"
 
-express = require "express"
+express    = require "express"
 
-gutil = require "gulp-util"
-chalk = require "chalk"
+# plumber    = require "gulp-plumber"
+notify     = require "gulp-notify"
+gutil      = require "gulp-util"
+chalk      = require "chalk"
+del        = require "del"
 
 # Settings & global stuff
 port = 8000
@@ -46,11 +49,22 @@ gulp.task "serve", ->
 # Default task. Runs Serve & watch
 gulp.task "default", ["serve", "watch"]
 
+clean = ->
+	del [
+		'./build/**/*'
+	]
+
 # Function to build through a bundler
 bundle = (bundler) ->
 	gutil.log chalk.yellow "building..."
 
-	ret = bundler.bundle()
+	clean()
+
+	bundler.bundle()
+		.on "log", gutil.log
+		.on "error", (err) ->
+			gutil.log chalk.red err
+			notify().write(err)
 		.pipe source "main.js"
 		.pipe buffer()
 		.pipe rename "game.js"
@@ -58,7 +72,4 @@ bundle = (bundler) ->
 		.pipe uglify()
 		.pipe sourcemaps.write "."
 		.pipe gulp.dest "build"
-
-	gutil.log chalk.green "Built!"
-
-	return ret
+		.pipe notify message: "Build successful! Well done, Kozie", onLast: true

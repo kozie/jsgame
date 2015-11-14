@@ -1,12 +1,6 @@
-class Player {
-  constructor() {
-    /*jshint ignore: start */
-    // if (new.target === Player) {
-    if (this.constructor.name === Player.prototype.constructor.name) {
-      throw new TypeError('Player is an abstract class');
-    }
-    /*jshint ignore: end */
-  }
+import GameObject from '../GameObject';
+
+class Player extends GameObject {
 }
 
 export default Player;

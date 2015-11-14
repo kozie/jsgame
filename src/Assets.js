@@ -1,4 +1,5 @@
 import PIXI from 'pixi.js';
+import _ from "lodash";
 
 class Assets {
 	constructor(manifest) {
@@ -17,9 +18,9 @@ class Assets {
 
 	init() {
 		// Add images
-		for (let i in this.data.images) {
-			this.loader.add(i, `images/${this.data.images[i]}`);
-		}
+		_.forIn(this.data.images, (k, src) => {
+			this.loader.add(k, `images/${src}`);
+		});
 
 		// When done loading..
 		// this.loader.once('complete', () => this.isDone = true);
