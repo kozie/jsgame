@@ -4,3 +4,5 @@
 
 - Add _init method to GameObject, which shoul be overridden to, for example add
   stuff to a scene etc.
+
+- Check and fix the render method/functionality in game.js
