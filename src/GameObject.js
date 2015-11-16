@@ -1,5 +1,6 @@
 import PIXI from 'pixi.js';
 import Size from './Size';
+import _ from 'lodash';
 
 class GameObject {
   constructor(x = 0, y = 0, w = 0, h = 0) {
@@ -32,57 +33,37 @@ class GameObject {
      * Parent object this object is added to
      * @type {GameObject}
      */
-    this.parent = null;
+    this._parent = null;
+  }
 
-    /**
-     * Sprite to draw
-     * @type {PIXI.Sprite}
-     */
-    this.sprite = null;
+  init() {
+    // Should be overridden in the sub class
   }
 
   get size() {
     return new Size(this.rectangle.width, this.rectangle.height);
   }
 
-  set size(w, h) {
-    if (w instanceof Size) {
-      this.rectangle.width = w.width;
-      this.rectangle.height = w.height;
-    } else {
-      this.rectangle.width = w;
-      this.rectangle.height = h;
+  set size(size) {
+    if (!(size instanceof Size)) {
+      throw new TypeError("size should be of object type Size");
     }
+
+    this.rectangle.width = size.width;
+    this.rectangle.height = size.height;
   }
 
   get position() {
     return new PIXI.Point(this.rectangle.x, this.rectangle.y);
   }
 
-  set position(x, y) {
-    if (x instanceof PIXI.Point) {
-      this.rectangle.x = x.x;
-      this.rectangle.y = x.y;
-    } else {
-      this.rectangle.x = x;
-      this.rectangle.y = y;
-    }
-  }
-
-  get sprite() {
-    if (this.sprite) {
-      this.sprite.position.x = this.position.x;
-      this.sprite.position.y = this.position.y;
-      this.sprite.width = this.size.width;
-      this.sprite.height = this.size.height;
+  set position(pos) {
+    if (!(pos instanceof PIXI.Point)) {
+      throw new TypeError("pos should be of object type PIXI.Point");
     }
 
-    return this.sprite;
-  }
-
-  set sprite(spr) {
-    // Just set the sprite
-    this.sprite = spr;
+    this.rectangle.x = pos.x;
+    this.rectangle.y = pos.y;
   }
 
   add(obj) {
@@ -93,13 +74,13 @@ class GameObject {
   }
 
   get parent() {
-    return this.parent;
+    return this._parent;
   }
 
   set parent(obj) {
-    if (!(obj instanceof GameObject)) throw new TypeError("Object should be a GameObject");
+    if (obj !== null && !(obj instanceof GameObject)) throw new TypeError("Object should be a GameObject");
 
-    this.parent = obj;
+    this._parent = obj;
   }
 
   input(keyboard, mouse, joystick) {
@@ -114,11 +95,11 @@ class GameObject {
     });
   }
 
-  render(screen) {
-    _.forEach(this.objects, (obj) => {
-      obj.render(screen);
-    });
-  }
+  // render(screen) {
+  //   _.forEach(this.objects, (obj) => {
+  //     obj.render(screen);
+  //   });
+  // }
 }
 
 export default GameObject;

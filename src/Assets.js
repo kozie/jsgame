@@ -18,7 +18,7 @@ class Assets {
 
 	init() {
 		// Add images
-		_.forIn(this.data.images, (k, src) => {
+		_.forIn(this.data.images, (src, k) => {
 			this.loader.add(k, `images/${src}`);
 		});
 
@@ -27,8 +27,6 @@ class Assets {
 
 		// When a resource has been loaded
 		this.loader.on('load', (loader, res) => {
-			console.log(loader.progress);
-
 			if (res.isImage) {
 				this.data.images[res.name] = res.data;
 			} // else ..

@@ -10,7 +10,8 @@ var assets = new Assets(JSON.parse(manifest));
 
 var screen = new Screen();
 var game = new Game(screen);
-var mainMenu = new MainMenuScene();
+var mainMenu = new MainMenuScene(screen);
+mainMenu.init();
 
 assets.init();
 

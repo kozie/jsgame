@@ -28,7 +28,7 @@ server.use express.static "./build"
 
 # Watch & build
 gulp.task "watch", ->
-	bundler = watchify browserify "./src/main.js", watchify.args
+	bundler = watchify browserify "./src/main.js", debug: true #watchify.args
 		.transform stringify [".json"]
 		.transform babelify
 

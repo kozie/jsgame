@@ -79,7 +79,8 @@ class Game {
 		this.scene.update(delta);
 
 		// Render / draw
-		this.scene.render(this.screen);
+		// this.scene.render(this.screen);
+		this.screen.draw();
 
 		// End stat tracking
 		this.stats.end();

@@ -1,16 +1,17 @@
 import PIXI from 'pixi.js';
 import _ from 'lodash';
+import Size from './Size';
 
 class Screen {
-  constructor(x = 800, y = 600) {
+  constructor(w = 800, h = 600) {
     var size = null;
-    if (!(size instanceof PIXI.Point)) {
-      size = new PIXI.Point(x, y);
+    if (!(w instanceof Size)) {
+      size = new Size(w, h);
     }
 
     /**
      * Size of the screen
-     * @type {PIXI.Point}
+     * @type {Size}
      */
     this.size = size;
 
@@ -18,7 +19,7 @@ class Screen {
      * PIXI's renderer to draw with
      * @member {PIXI.WebGLRenderer}
      */
-    this.renderer = new PIXI.WebGLRenderer(800, 600);
+    this.renderer = new PIXI.WebGLRenderer(this.size.width, this.size.height);
 
     // Just add the element to the root for now
     document.body.appendChild(this.renderer.view);
@@ -31,18 +32,14 @@ class Screen {
   }
 
   add(obj) {
-    // Add sprite if the object has once
-    if (obj.sprite !== null) {
-      this.stage.add(obj.sprite);
+    if (!(obj instanceof PIXI.DisplayObject)) {
+      throw new TypeError('obj must be of type PIXI.DisplayObject');
     }
 
-    // Check for children
-    _.forEach(obj.objects, (_obj) => {
-      this.add(_obj);
-    });
+    this.stage.addChild(obj);
   }
 
-  render() {
+  draw() {
     this.renderer.render(this.stage);
   }
 }
